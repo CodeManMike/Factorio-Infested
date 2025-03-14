@@ -1,0 +1,9 @@
+{
+  "name": "zerg_factorio_space_age",
+  "version": "0.1.0",
+  "title": "Zerg Factorio Space Age",
+  "author": "Your Name",
+  "factorio_version": "2.0",
+  "dependencies": ["base >= 2.0", "space-age"],
+  "description": "Transform into a Zerg Overlord and build a biological Zerg base. Capture biters to extract genetic data and evolve your structures. Compatible with Space Age."
+}
