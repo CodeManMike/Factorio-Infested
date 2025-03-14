@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/6b5460dd-6772-4540-a4e3-36ebb09c9aa3)
+
+
 # Factorio Infested Mod Plan
 
 OK, so as a massive fan of star craft, warhammer 40k and all things sci-fi, and knowing that I loved the idea of the krastorio guys adding in creep and bilogical elements to factorio, I thought it would be a fun idea to try and create a mod that adds in a full biological layer to factorio, and so the idea for Factorio Infested was born.
