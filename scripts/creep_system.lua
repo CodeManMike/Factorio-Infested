@@ -1,11 +1,11 @@
--- Zerg Factorio Space Age
+-- Factorio Infested
 -- Creep System Script
 
 local creep_system = {}
 
 -- Constants
-local CREEP_TILE_NAME = "zerg-creep"
-local MATURE_CREEP_TILE_NAME = "zerg-mature-creep"
+local CREEP_TILE_NAME = "infested-creep"
+local MATURE_CREEP_TILE_NAME = "infested-mature-creep"
 local CREEP_SPREAD_DISTANCE = 3
 local CREEP_SPREAD_CHANCE = 0.3
 local CREEP_MATURATION_CHANCE = 0.1
@@ -14,10 +14,10 @@ local POLLUTION_TO_BIOMASS_RATIO = 10 -- How much pollution to convert to 1 biom
 
 -- List of entities that can produce creep
 local CREEP_PRODUCERS = {
-    ["zerg-hatchery"] = {radius = 15, strength = 1.0},
-    ["zerg-lair"] = {radius = 20, strength = 1.5},
-    ["zerg-hive"] = {radius = 25, strength = 2.0},
-    ["creep-tumor"] = {radius = 10, strength = 0.8}
+    ["hatchery"] = {radius = 15, strength = 1.0},
+    ["creep-tumor"] = {radius = 10, strength = 0.8},
+    ["spawning-pool"] = {radius = 8, strength = 0.6},
+    ["evolution-chamber"] = {radius = 5, strength = 0.4}
 }
 
 -- Check if an entity is a creep producer

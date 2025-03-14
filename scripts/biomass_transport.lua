@@ -1,4 +1,4 @@
--- Zerg Factorio Space Age
+-- Factorio Infested
 -- Biomass Transport System
 
 local biomass_transport = {}
@@ -10,18 +10,26 @@ local TRANSPORT_RATE = 10 -- Items per transport operation
 
 -- List of entities that can be part of the biomass network
 local NETWORK_ENTITIES = {
-    ["zerg-hatchery"] = {storage = true, production = true, consumption = true},
-    ["zerg-lair"] = {storage = true, production = true, consumption = true},
-    ["zerg-hive"] = {storage = true, production = true, consumption = true},
-    ["zerg-evolution-chamber"] = {storage = false, production = false, consumption = true},
-    ["zerg-spawning-pool"] = {storage = false, production = false, consumption = true},
-    ["zerg-hydralisk-den"] = {storage = false, production = false, consumption = true},
-    ["zerg-spire"] = {storage = false, production = false, consumption = true},
-    ["zerg-infestation-pit"] = {storage = false, production = false, consumption = true},
-    ["zerg-nydus-network"] = {storage = true, production = false, consumption = false},
-    ["zerg-ultralisk-cavern"] = {storage = false, production = false, consumption = true},
-    ["zerg-greater-spire"] = {storage = false, production = false, consumption = true},
-    ["creep-tumor"] = {storage = false, production = false, consumption = false}
+    ["hatchery"] = {storage = true, production = true, consumption = true},
+    ["evolution-chamber"] = {storage = false, production = false, consumption = true},
+    ["infested-assembler"] = {storage = false, production = true, consumption = true},
+    ["infested-drill"] = {storage = false, production = true, consumption = false},
+    ["infested-lab"] = {storage = false, production = false, consumption = true},
+    ["infested-turret"] = {storage = false, production = false, consumption = true},
+    ["spine-crawler"] = {storage = false, production = false, consumption = true},
+    ["spore-crawler"] = {storage = false, production = false, consumption = true},
+    ["infested-belt"] = {storage = false, production = false, consumption = false, transport = true},
+    ["creep-vein"] = {storage = false, production = false, consumption = false, transport = true},
+    ["infested-inserter"] = {storage = false, production = false, consumption = false, transport = true},
+    ["tendril"] = {storage = false, production = false, consumption = false, transport = true},
+    ["infested-chest"] = {storage = true, production = false, consumption = false},
+    ["sac"] = {storage = true, production = false, consumption = false},
+    ["infested-boiler"] = {storage = false, production = false, consumption = true},
+    ["spawning-pool"] = {storage = false, production = true, consumption = true},
+    ["infested-pole"] = {storage = false, production = false, consumption = false, transport = true},
+    ["creep-tumor"] = {storage = false, production = true, consumption = false},
+    ["transport-network"] = {storage = true, production = false, consumption = false, transport = true},
+    ["leviathan-chrysalis"] = {storage = true, production = false, consumption = true}
 }
 
 -- Check if an entity is part of the biomass network

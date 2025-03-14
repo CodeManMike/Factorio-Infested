@@ -1,4 +1,4 @@
--- Zerg Factorio Space Age
+-- Factorio Infested
 -- Genetic Data System
 
 local genetic_data = {}
@@ -12,8 +12,10 @@ function genetic_data.add(amount)
     genetic_data.update_gui_for_all_players()
 
     -- Check if we've reached a new evolution threshold
-    local zerg_evolution = require("scripts.zerg_evolution")
-    zerg_evolution.check_evolution_threshold()
+    local infested_evolution = require("scripts.evolution")
+    infested_evolution.check_evolution_level()
+
+    return amount
 end
 
 -- Get current genetic data amount

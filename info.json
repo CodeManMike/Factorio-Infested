@@ -1,9 +1,9 @@
 {
-  "name": "zerg_factorio_space_age",
+  "name": "factorio_infested",
   "version": "0.1.0",
-  "title": "Zerg Factorio Space Age",
+  "title": "Factorio Infested",
   "author": "Your Name",
   "factorio_version": "2.0",
   "dependencies": ["base >= 2.0", "space-age"],
-  "description": "Transform into a Zerg Overlord and build a biological Zerg base. Capture biters to extract genetic data and evolve your structures. Compatible with Space Age."
+  "description": "Transform into an infected engineer, gradually evolving your factory from mechanical structures into a fully biological network. Spread creep, capture biters for genetic data, and evolve your technology to eventually spread across the galaxy."
 }

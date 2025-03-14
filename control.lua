@@ -1,21 +1,24 @@
--- Zerg Factorio Space Age
+-- Factorio Infested
 -- Main control script
 
 local genetic_data = require("scripts.genetic_data")
-local zerg_evolution = require("scripts.zerg_evolution")
+local infested_evolution = require("scripts.evolution")
 local biter_capture = require("scripts.biter_capture")
 local creep_system = require("scripts.creep_system")
 local biomass_transport = require("scripts.biomass_transport")
+local specialized_compounds = require("scripts.specialized_compounds")
 
 -- Initialize mod when a new game is created
 script.on_init(function()
     -- Initialize genetic data and evolution
     global.genetic_data = global.genetic_data or 0
     global.evolution_level = global.evolution_level or 1
+    global.biomass = global.biomass or 0
 
     -- Initialize systems
-    zerg_evolution.init()
+    infested_evolution.init()
     biter_capture.init()
+    specialized_compounds.init()
 
     -- Initialize creep system
     global.creep_tiles = global.creep_tiles or {}
@@ -24,12 +27,31 @@ script.on_init(function()
     -- Initialize biomass transport
     global.biomass_network = global.biomass_network or {}
     global.biomass_storage = global.biomass_storage or {}
+
+    -- Initialize specialized compounds
+    global.specialized_compounds = global.specialized_compounds or {
+        carapace = 0,
+        acid = 0,
+        toxin = 0,
+        enzyme = 0
+    }
+
+    -- Initialize resource-infused materials
+    global.infused_materials = global.infused_materials or {
+        neural_conduits = 0,
+        enzymatic_catalyst = 0,
+        organic_fluids = 0,
+        hyper_evolutionary_dna = 0
+    }
+
+    -- Register handlers
+    specialized_compounds.register_handlers()
 end)
 
 -- Handle configuration changes
 script.on_configuration_changed(function(data)
     -- Re-initialize systems when mod is updated
-    zerg_evolution.init()
+    infested_evolution.init()
     biter_capture.init()
 
     -- Update GUI for all players
@@ -49,144 +71,146 @@ script.on_event(defines.events.on_entity_died, function(event)
     biter_capture.on_entity_died(event)
 end)
 
--- Handle building placement events
+-- Handle creep spread
+script.on_nth_tick(60, function(event)
+    if settings.global["infested-auto-spread-creep"].value then
+        creep_system.spread_creep()
+    end
+end)
+
+-- Handle biomass transport
+script.on_nth_tick(10, function(event)
+    biomass_transport.process_transport()
+end)
+
+-- Handle pollution conversion to biomass
+script.on_nth_tick(300, function(event)
+    if settings.global["infested-pollution-to-biomass"].value then
+        creep_system.convert_pollution_to_biomass()
+    end
+end)
+
+-- Handle building placement
 script.on_event(defines.events.on_built_entity, function(event)
     local entity = event.created_entity
-    if not entity or not entity.valid then return end
 
-    -- Check if this is a Zerg building
-    if string.sub(entity.name, 1, 5) == "zerg-" or entity.name == "creep-tumor" then
-        -- Verify it's on or near creep if required by settings
-        if settings.global["zerg-buildings-require-creep"].value then
-            if not creep_system.is_on_creep(entity.position) and not creep_system.is_near_creep(entity.position) then
-                -- If not on creep and not a creep producer, warn player and potentially remove
-                if not creep_system.is_creep_producer(entity.name) then
-                    game.players[event.player_index].print({"", "[color=red]Warning: ", entity.name, " must be placed on or near creep![/color]"})
-                    entity.destroy()
-                    return
-                end
+    -- Check if building requires creep
+    if settings.global["infested-buildings-require-creep"].value then
+        if string.find(entity.name, "infested") or string.find(entity.name, "evolution") then
+            -- Check if building is on creep
+            if not creep_system.is_on_creep(entity.position) then
+                -- Not on creep, cancel placement and refund item
+                local player = game.players[event.player_index]
+                player.insert({name = event.stack.name, count = 1})
+                entity.destroy()
+                player.print({"", "[color=red]This building requires creep to be placed![/color]"})
+                return
             end
         end
+    end
 
-        -- If it's a creep producer, register it
-        if creep_system.is_creep_producer(entity.name) then
-            creep_system.register_creep_source(entity)
-        end
+    -- Register creep sources
+    if entity.name == "creep-tumor" or entity.name == "hatchery" then
+        creep_system.register_creep_source(entity)
+    end
 
-        -- If it's part of the biomass network, register it
-        if biomass_transport.is_network_entity(entity.name) then
-            biomass_transport.register_network_entity(entity)
-        end
+    -- Register biomass transport nodes
+    if string.find(entity.name, "infested") or entity.name == "transport-network" then
+        biomass_transport.register_node(entity)
     end
 end)
 
--- Handle robot building placement
-script.on_event(defines.events.on_robot_built_entity, function(event)
-    local entity = event.created_entity
-    if not entity or not entity.valid then return end
-
-    -- Check if this is a Zerg building
-    if string.sub(entity.name, 1, 5) == "zerg-" or entity.name == "creep-tumor" then
-        -- Verify it's on or near creep if required by settings
-        if settings.global["zerg-buildings-require-creep"].value then
-            if not creep_system.is_on_creep(entity.position) and not creep_system.is_near_creep(entity.position) then
-                -- If not on creep and not a creep producer, remove it
-                if not creep_system.is_creep_producer(entity.name) then
-                    entity.destroy()
-                    return
-                end
-            end
-        end
-
-        -- If it's a creep producer, register it
-        if creep_system.is_creep_producer(entity.name) then
-            creep_system.register_creep_source(entity)
-        end
-
-        -- If it's part of the biomass network, register it
-        if biomass_transport.is_network_entity(entity.name) then
-            biomass_transport.register_network_entity(entity)
-        end
-    end
-end)
-
--- Handle building removal events
-script.on_event(defines.events.on_entity_destroyed, function(event)
+-- Handle building removal
+script.on_event(defines.events.on_entity_died, function(event)
     local entity = event.entity
-    if not entity or not entity.valid then return end
 
-    -- If it was a creep producer, unregister it
-    if creep_system.is_creep_producer(entity.name) then
+    -- Unregister creep sources
+    if entity.name == "creep-tumor" or entity.name == "hatchery" then
         creep_system.unregister_creep_source(entity)
     end
 
-    -- If it was part of the biomass network, unregister it
-    if biomass_transport.is_network_entity(entity.name) then
-        biomass_transport.unregister_network_entity(entity)
+    -- Unregister biomass transport nodes
+    if string.find(entity.name, "infested") or entity.name == "transport-network" then
+        biomass_transport.unregister_node(entity)
     end
 end)
 
--- Register custom commands for debugging
-commands.add_command("zerg-add-genetic-data", "Add genetic data for debugging", function(command)
-    local player = game.players[command.player_index]
-    if not player or not player.admin then return end
-
-    local amount = tonumber(command.parameter) or 100
-    genetic_data.add(amount)
-    player.print("Added " .. amount .. " genetic data. New total: " .. genetic_data.get())
+-- Handle GUI clicks
+script.on_event(defines.events.on_gui_click, function(event)
+    genetic_data.on_gui_click(event)
 end)
 
-commands.add_command("zerg-evolution-level", "Set evolution level for debugging", function(command)
-    local player = game.players[command.player_index]
-    if not player or not player.admin then return end
+-- Add biomass
+function add_biomass(amount)
+    global.biomass = global.biomass + amount
 
-    local level = tonumber(command.parameter) or 1
-    zerg_evolution.set_level(level)
-    player.print("Set evolution level to " .. level)
-end)
-
-commands.add_command("zerg-spread-creep", "Manually spread creep for debugging", function(command)
-    local player = game.players[command.player_index]
-    if not player or not player.admin then return end
-
-    creep_system.force_spread_creep()
-    player.print("Manually triggered creep spread")
-end)
-
--- Update GUI elements and process game mechanics
-script.on_event(defines.events.on_tick, function(event)
-    -- Update GUI once per second
-    if event.tick % 60 == 0 then
-        genetic_data.update_gui_for_all_players()
+    -- Update GUI for all players
+    for _, player in pairs(game.players) do
+        if player.connected and settings.get_player_settings(player)["infested-show-biomass-gui"].value then
+            update_biomass_gui(player)
+        end
     end
 
-    -- Process creep spread every 5 seconds
-    if event.tick % 300 == 0 then
-        creep_system.process_creep_spread()
+    return amount
+end
+
+-- Update biomass GUI for a player
+function update_biomass_gui(player)
+    -- Create or update biomass GUI
+    local frame = player.gui.left["biomass-frame"]
+    if not frame then
+        frame = player.gui.left.add({type = "frame", name = "biomass-frame", caption = "Biomass"})
+        frame.add({type = "label", name = "biomass-label"})
     end
 
-    -- Process biomass transport every 10 ticks
-    if event.tick % 10 == 0 then
-        biomass_transport.process_transport()
-    end
+    frame["biomass-label"].caption = string.format("Available: %d", global.biomass)
+end
 
-    -- Convert pollution to biomass every 30 seconds
-    if event.tick % 1800 == 0 then
-        creep_system.process_pollution_absorption()
+-- Add specialized compound
+function add_specialized_compound(compound_type, amount)
+    if global.specialized_compounds[compound_type] then
+        global.specialized_compounds[compound_type] = global.specialized_compounds[compound_type] + amount
+        return amount
     end
-end)
+    return 0
+end
 
--- Apply movement speed bonus on creep for players
-script.on_event(defines.events.on_player_changed_position, function(event)
-    local player = game.players[event.player_index]
-    if not player or not player.valid or not player.character then return end
-
-    -- Check if player is on creep
-    if creep_system.is_on_creep(player.position) then
-        -- Apply speed bonus if on creep
-        player.character.character_running_speed_modifier = 0.3 -- 30% speed bonus
-    else
-        -- Remove speed bonus if not on creep
-        player.character.character_running_speed_modifier = 0
+-- Add infused material
+function add_infused_material(material_type, amount)
+    if global.infused_materials[material_type] then
+        global.infused_materials[material_type] = global.infused_materials[material_type] + amount
+        return amount
     end
-end)
+    return 0
+end
+
+-- Remote interface for other mods to interact with
+remote.add_interface("factorio_infested", {
+    add_genetic_data = function(amount)
+        return infested_evolution.add_genetic_data(amount)
+    end,
+    add_biomass = function(amount)
+        return add_biomass(amount)
+    end,
+    get_evolution_level = function()
+        return infested_evolution.get_level()
+    end,
+    get_genetic_data = function()
+        return infested_evolution.get_genetic_data()
+    end,
+    get_biomass = function()
+        return global.biomass
+    end,
+    add_compound = function(compound_type, amount)
+        return specialized_compounds.add_compound(compound_type, amount)
+    end,
+    get_compound = function(compound_type)
+        return specialized_compounds.get_compound(compound_type)
+    end,
+    add_infused_material = function(material_type, amount)
+        return specialized_compounds.add_infused_material(material_type, amount)
+    end,
+    get_infused_material = function(material_type)
+        return specialized_compounds.get_infused_material(material_type)
+    end
+})

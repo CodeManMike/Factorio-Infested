@@ -17,7 +17,7 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 1. **Gather Resources**: Initially use standard mining and tree harvesting to collect raw materials
 2. **Process Biomass**: Convert raw materials and organic matter (trees, biters) into biomass through dissolution pools
 3. **Infuse Resources**: Combine traditional resources with biomass to create specialized hive materials
-4. **Expand Creep Network**: As biomass accumulates, creep spreads, enabling more advanced structures
+4. **Expand Creep Network**: As biomass accumulates, creep spreads, enabling the base to grow larger and more complex
 5. **Capture Biters**: Extract genetic data from biters to fuel evolution and unlock new abilities
 6. **Upgrade Structures**: Gradually transform mechanical buildings into biological versions with enhanced functionality
 7. **Evolve for Space**: Reach the late game by growing massive biological structures capable of space travel
@@ -27,12 +27,13 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 ### Infected Engineer Progression
 - Initially human but visibly infected, gaining biological enhancements over time
 - Starts with standard Factorio buildings that show signs of infestation
-- Eventually transforms into a Hive Overlord with enhanced abilities:
+- Eventually transforms into a a completely mutated Overlord with enhanced abilities:
   - Slower movement speed than the standard engineer
   - Better mining capabilities (using tentacles)
   - Natural resistance to certain damage types
   - Can see further (higher vision range)
   - Larger inventory (biological storage sacs)
+  - can fly
 
 ### Resource Integration
 - Traditional Factorio resources are infused with biomass to create specialized hive materials:
@@ -73,6 +74,13 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 - Evolution levels (1-5) determine what structures are available
 - Higher evolution levels provide passive bonuses to all hive structures
 
+### Biters
+- Biters can be zombified to attract them to the base
+- Biters can be killed for genetic data
+- Biters can be captured for biomass
+- Biters can be converted to defend the engineer and base
+
+
 ### Infestation Progression
 - **Phase 1**: Standard Factorio buildings with visible organic infestations
 - **Phase 2**: Buildings begin fusing with biological components, increasing efficiency
@@ -88,9 +96,9 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 | Gun Turret | Infested Turret | Spine Crawler |
 | Laser Turret | Organic Laser Turret | Spore Crawler |
 | Transport Belt | Vein-Infested Belt | Creep Vein |
-| Inserter | Tentacle-Infested Inserter | Tendril |
+| Inserter | Tentacle-Infested Inserter | Stuffer |
 | Chest | Living Storage | Sac |
-| Boiler/Steam Engine | Hybrid Reactor | Spawning Pool |
+| Boiler/Steam Engine | Hybrid Reactor | Fusion Reactor |
 | Electric Pole | Organic Conduit | Creep Tumor |
 | Roboport | Mutated Roboport | Transport Network |
 | Rocket Silo | Infested Silo | Leviathan Chrysalis |
@@ -99,16 +107,17 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 - At first, the factory uses traditional belts and inserters, showing progressive infestation
 - Over time, creep veins replace belts, allowing resources to flow organically
 - Tendril inserters evolve to manipulate items from the creep instead of using mechanical arms
-- Buildings slowly integrate with the creep, no longer requiring direct connections
+- Buildings slowly integrate with the creep, no longer requiring direct connections (fuctions like requester and provider chests)
 - Resources flow through the creep rather than on belts
 - Specialized structures can accelerate or direct flow within the creep
 - Resources can be stored in biological sacs
 
 ### Pollution Mechanics
-- Hive structures produce less pollution than their mechanical counterparts
+- Hive structures produce less pollution than their mechanical counterparts (eventually creating toxin that slowly infects biters that are further away from the base)
+- Zombify biters (biters that are further away from the base) to attract them to the base for genetic data collection
 - Creep absorbs pollution, converting it to small amounts of biomass
 - High pollution still attracts biters, which is beneficial for genetic data collection
-- Specialized structures can be evolved to process pollution more efficiently
+- Specialized structures can be evolved to process pollution more efficiently into toxin
 
 ### Power System Adaptation
 - Initially uses standard Factorio power generators
@@ -117,11 +126,11 @@ The Factorio Infested mod is a full overhaul of the game. Players take on the ro
 - The most advanced energy system is a Bio-Mechanical Fusion Reactor, merging organic and inorganic technology
 
 ### Space Age Integration
-- Late-game evolution allows adaptation for space travel
+- Late-game evolution allows adaptation for space travel (grow platforms instead of using scaffolding)
 - Specialized biological structures for surviving in space
-- Leviathan Chrysalis serves as the rocket silo equivalent
-- Space-adapted creep for colonizing other planets
-- Hyper-Evolutionary DNA (uranium-infused biomass) enables space adaptation
+- Leviathan Chrysalis serves as the rocket silo equivalent (except counting as multiple rockets, i.e: more tonnage)
+- Space-adapted creep for colonizing other planets (tendrils eventually create links from plants to orbit, and eventually to other planets)
+- Hyper-Evolutionary DNA (uranium-infused biomass) enables space adaptation for larger and longer tendrils
 
 ## Evolution Levels
 

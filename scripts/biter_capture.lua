@@ -1,4 +1,4 @@
--- Zerg Factorio Space Age
+-- Factorio Infested
 -- Biter Capture System
 
 local biter_capture = {}
@@ -48,8 +48,8 @@ function biter_capture.on_entity_died(event)
     elseif cause.type == "ammo-turret" or cause.type == "electric-turret" or cause.type == "fluid-turret" then
         -- Turret kill
         is_player_kill = true
-    elseif string.sub(cause.name, 1, 5) == "zerg-" then
-        -- Zerg structure kill
+    elseif string.sub(cause.name, 1, 5) == "infested-" then
+        -- Infested structure kill
         is_player_kill = true
     end
 
