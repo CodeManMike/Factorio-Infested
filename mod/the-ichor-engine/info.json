@@ -1,0 +1,12 @@
+{
+  "name": "the-ichor-engine",
+  "version": "0.0.1",
+  "title": "The Ichor Engine",
+  "author": "CodeManMike",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base >= 2.0.0",
+    "space-age >= 2.0.0"
+  ],
+  "description": "A Space Age planet overhaul about biological industry, neural control, mutation, sterile betrayal, and escape from a living factory."
+}

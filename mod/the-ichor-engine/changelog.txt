@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2026-07-24
+  - Initial scaffold: bootstrap runtime, storage.ichor, debug commands
+  - Ichor Space Age planet shell and pre-escape cargo lock

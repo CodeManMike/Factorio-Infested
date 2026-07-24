@@ -1,0 +1,1 @@
+require("scripts.bootstrap.bootstrap")
