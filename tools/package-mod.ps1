@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$Version = "0.0.1"
+$Version = "0.2.0"
 $ModName = "the-ichor-engine"
 $ModSource = Resolve-Path (Join-Path $PSScriptRoot "..\mod\$ModName")
 $OutZip = Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")) "$ModName`_$Version.zip"

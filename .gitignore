@@ -6,3 +6,56 @@
 
 # Build artifacts
 /the-ichor-engine_*.zip
+
+# --- art-source: ignore all large working/export files ---
+# Folder structure, README.md, and .gitkeep files remain tracked.
+
+# 3D / DCC project files
+art-source/**/*.blend
+art-source/**/*.blend1
+art-source/**/*.fbx
+art-source/**/*.obj
+art-source/**/*.gltf
+art-source/**/*.glb
+art-source/**/*.ma
+art-source/**/*.mb
+
+# 2D painting / sprite project files
+art-source/**/*.psd
+art-source/**/*.psb
+art-source/**/*.kra
+art-source/**/*.ora
+art-source/**/*.xcf
+art-source/**/*.ase
+art-source/**/*.aseprite
+
+# Render / HDR intermediates
+art-source/**/*.exr
+art-source/**/*.hdr
+art-source/**/*.tga
+art-source/**/*.tif
+art-source/**/*.tiff
+
+# Video / archives
+art-source/**/*.mp4
+art-source/**/*.mov
+art-source/**/*.zip
+art-source/**/*.7z
+art-source/**/*.rar
+
+# Exported frames and sheets (high volume; copy finals to mod/graphics/ only)
+art-source/exports/
+
+# Large rasters anywhere under art-source (concept, reference, WIP)
+art-source/**/*.png
+art-source/**/*.jpg
+art-source/**/*.jpeg
+art-source/**/*.webp
+art-source/**/*.gif
+art-source/**/*.bmp
+
+# Re-allow tracked scaffolding inside art-source
+!art-source/**/
+!art-source/README.md
+!art-source/**/README.md
+!art-source/**/.gitkeep

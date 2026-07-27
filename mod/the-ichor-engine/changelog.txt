@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 2026-07-24
+  - Art pipeline scaffold: art-source/ tree, mod graphics/ layout, placeholder MVP sprites
+  - Custom graphics wired for tiles, entities, items, fluids, GUI sprites, technologies
+  - Biological Production: Nutrient Vat I, Digestive Smelter I, Tendril, Tendon Track, Crude Vein, Bladder Tank
+  - Bio-Forged Copper Plate, bio-logistics and bio-metallurgy research chain
+  - Nutrient Vat and Digestive Smelter registered as bio-buildings in entity registry
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2026-07-24
+  - MVP loop: core prototypes, entity registry, substrate spread, neural signal
+  - Hive hunger, loyalty, mutation pressure, feral conversion
+  - Debug commands, basic GUI panels, alerts, early research technologies
+
+---------------------------------------------------------------------------------------------------
 Version: 0.0.1
 Date: 2026-07-24
   - Initial scaffold: bootstrap runtime, storage.ichor, debug commands

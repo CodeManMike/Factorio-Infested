@@ -15,14 +15,34 @@
 
 ## Current Status
 
-Early scaffold / MVP in progress (`0.0.1`):
+**v0.2.0** — MVP loop plus Biological Production scaffold:
 
-- Mod loads with bootstrap runtime and `storage.ichor`
-- Ichor planet shell on the Space Age starmap
-- Pre-escape cargo landing pad and cargo pod lock on Ichor
-- Debug commands: `/ichor-status`, `/ichor-complete-escape`, `/ichor-reset-escape`
+- Core MVP prototypes (substrate tiles, hive core, growth chamber, neural pylon, fluids, recipes)
+- Entity registry with `storage.ichor.entities` tracking
+- Living substrate spread, substrate support validation, neural radius signal
+- Hive hunger, loyalty decay, mutation pressure, feral conversion
+- Biological Production buildings: Nutrient Vat I, Digestive Smelter I, Tendril, Tendon Track, Crude Vein, Bladder Tank
+- Bio-Forged Copper Plate and expanded research chain
+- Placeholder MVP graphics in `mod/the-ichor-engine/graphics/` (replace via `art-source/` pipeline)
+- Debug commands, Hive/Entity GUI panels, alerts
+- Early research technologies and Biomass Science
 
-Gameplay systems (substrate spread, growth chambers, neural pylons, feral conversion, UI) are next.
+## Art Pipeline
+
+| Path | Role |
+|---|---|
+| [`art-source/`](art-source/) | Local working files (Blender, Aseprite, Krita). Large binaries are **gitignored**. |
+| [`mod/the-ichor-engine/graphics/`](mod/the-ichor-engine/graphics/) | Game-ready PNGs shipped with the mod (`entity/`, `tile/`, `icon/`, `gui/`, `technology/`). |
+
+Export finals from `art-source/exports/` into `mod/the-ichor-engine/graphics/`, then run `tools/validate-graphics.ps1` before packaging. `art-source/` is never included in the release zip.
+
+```powershell
+# Generate colored placeholder sprites for wireup testing
+python .\tools\generate-placeholder-graphics.py
+
+# Verify expected PNGs exist
+.\tools\validate-graphics.ps1
+```
 
 ## Requirements
 

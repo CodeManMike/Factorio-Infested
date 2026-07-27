@@ -4,15 +4,18 @@ local StorageFactory = require("scripts.bootstrap.storage-factory")
 local ForceSetup = require("scripts.bootstrap.force-setup")
 local Events = require("scripts.bootstrap.events")
 local Commands = require("scripts.debug.commands")
+local Gui = require("scripts.gui.gui")
 
 function Bootstrap.on_init()
   StorageFactory.ensure()
   ForceSetup.ensure()
+  Gui.on_init_players()
 end
 
 function Bootstrap.on_configuration_changed()
   StorageFactory.ensure()
   ForceSetup.ensure()
+  Gui.on_init_players()
 end
 
 function Bootstrap.on_load()
